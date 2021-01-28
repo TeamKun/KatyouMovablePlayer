@@ -28,7 +28,7 @@ public class PlayerRinger implements IWorldRingWhether {
     }
 
     public String getMusicURL() {
-        String str = "https://www.dropbox.com/s/qt9rn67jziubk46/%E3%82%B5%E3%82%AB%E3%83%8A%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%20%20%E6%96%B0%E5%AE%9D%E5%B3%B6.mp3?dl=1";
+        String str = "https://www.dropbox.com/s/kg7gkv5n5ny0524/train.mp3?dl=1";
         return str;
     }
 
