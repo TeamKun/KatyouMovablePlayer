@@ -1,0 +1,10 @@
+modLoader = "javafml"
+loaderVersion = "[31,)"
+
+[[mods]]
+modId = "katyoumovableplayer"
+version = "${file.jarVersion}"
+displayName = "Katyou Movable Player"
+credits = "KUN Dev Lab"
+authors = "MORIMORI0317"
+description = "A Ikisugi MOD"
