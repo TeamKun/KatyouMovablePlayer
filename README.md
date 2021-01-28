@@ -5,5 +5,5 @@
 
 # Using Library
 
-[JLayer](http://www.javazoom.net/javalayer/javalayer.html) ([Custom](https://github.com/TeamFelnull/JLayerIMPCustom)) - mp3 play
+[JLayer](http://www.javazoom.net/javalayer/javalayer.html) ([カスタム済み](https://github.com/TeamFelnull/JLayerIMPCustom)) - mp3 play
 
