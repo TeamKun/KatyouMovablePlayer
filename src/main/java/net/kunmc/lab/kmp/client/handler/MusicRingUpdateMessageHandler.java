@@ -13,6 +13,7 @@ public class MusicRingUpdateMessageHandler {
         MusicRinger ringer = ClientWorldMusicManager.instance().getMusicRinger(message.uuid);
         if (ringer != null) {
             ringer.setVolume(message.musicVolume);
+            ringer.setPositionVec(message.musicPos);
         }
     }
 }

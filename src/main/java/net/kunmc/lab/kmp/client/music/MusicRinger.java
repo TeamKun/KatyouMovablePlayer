@@ -57,6 +57,10 @@ public class MusicRinger {
         }
     }
 
+    public void setPositionVec(Vec3d position) {
+        this.positionVec = position;
+    }
+
     public void setVolume(float volume) {
         this.volume = volume;
     }

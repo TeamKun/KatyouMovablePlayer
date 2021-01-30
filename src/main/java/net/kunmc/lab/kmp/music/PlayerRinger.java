@@ -75,8 +75,7 @@ public class PlayerRinger implements IWorldRingWhether {
     @Override
     public Vec3d getMusicPos() {
 
-        return new Vec3d(0, 0, 0);
-        //return playerEntity.getPositionVec();
+       return playerEntity.getPositionVec();
     }
 
     @Override
