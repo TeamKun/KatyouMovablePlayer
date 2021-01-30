@@ -24,8 +24,9 @@ public class URLMp3MusicPlayer implements IMusicPlayer {
 
     public URLMp3MusicPlayer(URL url) throws IOException, BitstreamException {
         this.url = url;
-        this.stream = url.openStream();
         HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
+        httpConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36");
+        this.stream = httpConnection.getInputStream();
         this.duration = MusicUtils.getMP3Duration(stream, httpConnection.getContentLength());
         this.frameSecond = MusicUtils.getMP3MillisecondPerFrame(stream);
     }
@@ -36,7 +37,7 @@ public class URLMp3MusicPlayer implements IMusicPlayer {
             if (!this.isReady && player == null) {
                 this.readyTime = System.currentTimeMillis();
                 this.startPosition = startMiliSecond;
-                this.player = new AdvancedPlayer(url.openStream());
+                this.player = new AdvancedPlayer(stream);
                 this.isReady = true;
             }
         } catch (Exception ex) {

@@ -85,6 +85,7 @@ public class BoomboxScreen extends Screen {
         this.musicURLTextField.setResponder(n -> {
             if (this.musicURLCheckThread != null)
                 this.musicURLCheckThread.setStop(true);
+            insStop();
             this.musicURLCheckThread = new MusicURLCheckThread(n);
             this.musicURLCheckThread.start();
         });
@@ -248,8 +249,9 @@ public class BoomboxScreen extends Screen {
             long duration = 0;
             try {
                 URL url = new URL(source);
-                InputStream stream = url.openStream();
                 HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
+                httpConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36");
+                InputStream stream = httpConnection.getInputStream();
                 duration = MusicUtils.getMP3Duration(stream, httpConnection.getContentLength());
             } catch (Exception ex) {
                 if (!this.stop) {

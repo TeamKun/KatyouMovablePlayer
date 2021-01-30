@@ -1,6 +1,14 @@
 {
-	"parent": "katyoumovableplayer:item/boombox_on",
-	"textures": {
-		"1": "katyoumovableplayer:item/boombox_off"
-	}
+  "parent": "katyoumovableplayer:item/boombox_on",
+  "textures": {
+    "1": "katyoumovableplayer:item/boombox_off"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "on": 1
+      },
+      "model": "katyoumovableplayer:item/boombox_on"
+    }
+  ]
 }
