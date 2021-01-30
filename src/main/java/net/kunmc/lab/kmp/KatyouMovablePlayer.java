@@ -7,7 +7,10 @@ import net.kunmc.lab.kmp.handler.ServerHandler;
 import net.kunmc.lab.kmp.handler.WorldRingerHandler;
 import net.kunmc.lab.kmp.music.ServerWorldMusicManager;
 import net.kunmc.lab.kmp.packet.PacketHandler;
+import net.kunmc.lab.kmp.proxy.ClientProxy;
+import net.kunmc.lab.kmp.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -18,6 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(KatyouMovablePlayer.MODID)
 public class KatyouMovablePlayer {
     public static final String MODID = "katyoumovableplayer";
+    public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public KatyouMovablePlayer() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

@@ -28,8 +28,11 @@ public class PlayerRinger implements IWorldRingWhether {
     }
 
     public String getMusicURL() {
-        String str = "https://www.dropbox.com/s/kg7gkv5n5ny0524/train.mp3?dl=1";
-        return str;
+        CompoundNBT tag = getMusicPlayer().getTag();
+        if (tag != null) {
+            return tag.getString("MusicURL");
+        }
+        return "";
     }
 
     @Override
@@ -39,7 +42,7 @@ public class PlayerRinger implements IWorldRingWhether {
     @Override
     public void musicStoped() {
         CompoundNBT tag = getMusicPlayer().getOrCreateTag();
-        tag.putBoolean("Play", false);
+        tag.putString("Mode", BoomboxMode.NONE.getName());
     }
 
     @Override
@@ -51,7 +54,7 @@ public class PlayerRinger implements IWorldRingWhether {
         if (playerEntity.inventory.mainInventory.stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
             return false;
         CompoundNBT tag = getMusicPlayer().getTag();
-        return tag != null && tag.getBoolean("Play");
+        return tag != null && tag.getString("Mode").equalsIgnoreCase(BoomboxMode.PLAY.getName());
     }
 
     @Override
@@ -83,4 +86,15 @@ public class PlayerRinger implements IWorldRingWhether {
     public boolean isMusicLoop() {
         return false;
     }
+
+    @Override
+    public long getMusicDuration() {
+        CompoundNBT tag = getMusicPlayer().getTag();
+        if (tag != null) {
+            return tag.getLong("Duration");
+        }
+        return 0;
+    }
+
+
 }

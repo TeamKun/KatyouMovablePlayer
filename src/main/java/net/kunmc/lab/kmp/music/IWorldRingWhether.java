@@ -19,4 +19,6 @@ public interface IWorldRingWhether {
     float getMusicVolume();
 
     boolean isMusicLoop();
+
+    long getMusicDuration();
 }

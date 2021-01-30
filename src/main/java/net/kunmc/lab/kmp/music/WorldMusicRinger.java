@@ -137,7 +137,7 @@ public class WorldMusicRinger {
 
         if (ringin) {
             long cur = ringStartElapsedTime + System.currentTimeMillis() - ringStartTime;
-            if (cur >= Integer.MAX_VALUE) {//長さ！
+            if (cur >= whether.getMusicDuration()) {//長さ！
                 if (whether.isMusicLoop()) {
                     pause();
                     whether.setCurrentMusicPlayPosition(0);
