@@ -3,9 +3,11 @@ package net.kunmc.lab.kmp.music;
 import net.kunmc.lab.kmp.item.KMPItems;
 import net.kunmc.lab.kmp.util.PlayerUtil;
 import net.kunmc.lab.kmp.util.ServerUtil;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.Vec3d;
 
 public class PlayerRinger implements IWorldRingWhether {
@@ -16,7 +18,7 @@ public class PlayerRinger implements IWorldRingWhether {
     }
 
     public ItemStack getMusicPlayer() {
-        return playerEntity.inventory.mainInventory.stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).findFirst().orElse(ItemStack.EMPTY);
+        return getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).findFirst().orElse(ItemStack.EMPTY);
     }
 
     public void musicPlay() {
@@ -35,6 +37,15 @@ public class PlayerRinger implements IWorldRingWhether {
         return "";
     }
 
+    private final NonNullList<ItemStack> getPlayerItems() {
+        PlayerInventory inventory = playerEntity.inventory;
+        NonNullList<ItemStack> il = NonNullList.create();
+        il.addAll(inventory.mainInventory);
+        il.addAll(inventory.armorInventory);
+        il.addAll(inventory.offHandInventory);
+        return il;
+    }
+
     @Override
     public void musicPlayed() {
     }
@@ -45,13 +56,14 @@ public class PlayerRinger implements IWorldRingWhether {
         tag.putString("Mode", BoomboxMode.NONE.getName());
     }
 
+
     @Override
     public boolean canMusicPlay() {
         if (!ServerUtil.isOnlinePlayer(PlayerUtil.getUUID(playerEntity)))
             return false;
         if (playerEntity.getHealth() <= 0)
             return false;
-        if (playerEntity.inventory.mainInventory.stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
+        if ( getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
             return false;
         CompoundNBT tag = getMusicPlayer().getTag();
         return tag != null && tag.getString("Mode").equalsIgnoreCase(BoomboxMode.PLAY.getName());
@@ -75,7 +87,7 @@ public class PlayerRinger implements IWorldRingWhether {
     @Override
     public Vec3d getMusicPos() {
 
-       return playerEntity.getPositionVec();
+        return playerEntity.getPositionVec();
     }
 
     @Override

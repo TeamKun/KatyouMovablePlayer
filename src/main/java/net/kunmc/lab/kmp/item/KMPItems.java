@@ -9,7 +9,7 @@ import java.util.List;
 
 public class KMPItems {
     public static List<Item> MOD_ITEMS = new ArrayList<Item>();
-    public static final Item TEST_SOUND = register("test_sound", new TestSoundItem(new Item.Properties().group(ItemGroup.TOOLS)));
+   // public static final Item TEST_SOUND = register("test_sound", new TestSoundItem(new Item.Properties().group(ItemGroup.TOOLS)));
     public static final Item BOOMBOX = register("boombox", new BoomBoxItem(new Item.Properties().group(ItemGroup.TOOLS).maxStackSize(1)));
 
     private static Item register(String name, Item item) {

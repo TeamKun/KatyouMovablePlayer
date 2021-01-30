@@ -1,6 +1,7 @@
 package net.kunmc.lab.kmp;
 
 import net.kunmc.lab.kmp.client.handler.MusicRingerHandler;
+import net.kunmc.lab.kmp.client.handler.RenderHandler;
 import net.kunmc.lab.kmp.client.music.ClientWorldMusicManager;
 import net.kunmc.lab.kmp.client.music.MusicThread;
 import net.kunmc.lab.kmp.handler.ServerHandler;
@@ -41,6 +42,7 @@ public class KatyouMovablePlayer {
         MusicThread.startThread();
         ClientWorldMusicManager.init();
         MinecraftForge.EVENT_BUS.register(MusicRingerHandler.class);
+        MinecraftForge.EVENT_BUS.register(RenderHandler.class);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
