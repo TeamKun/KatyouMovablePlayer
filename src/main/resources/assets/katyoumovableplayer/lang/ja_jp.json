@@ -1,5 +1,10 @@
 {
   "_comment.i": "item",
   "item.katyoumovableplayer.boombox": "ラジカセ",
+  "_comment.g": "gui",
+  "boombox.urlcheack": "URLを確認中",
+  "boombox.notavailable": "利用不可",
+  "boombox.available": "利用可",
+  "boombox.urlempty": "URLが空です",
   "_comment.l": "last"
 }

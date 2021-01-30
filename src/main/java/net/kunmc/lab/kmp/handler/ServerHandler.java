@@ -36,6 +36,8 @@ public class ServerHandler {
             } else if (e.getId() == 2) {
                 PlayerRinger ringer = new PlayerRinger(e.getPlayer());
                 ringer.musicPlay();
+            } else if (e.getId() == 3) {
+                tag.putLong("CurrentPosition", 0);
             }
         }
     }

@@ -53,14 +53,14 @@ public class BoomboxScreen extends Screen {
 
         musicResult = !getStackMusicURL().isEmpty();
 
-        this.pauseButton = addBoomboxButton(64, 44, 0, n -> {
+        this.pauseButton = addBoomboxButton(75, 44, 0, n -> {
             if (!getStackMusicURL().isEmpty() && getMode() == BoomboxMode.PLAY)
                 insMode(BoomboxMode.PAUSE);
         }, () -> getMode() == BoomboxMode.PAUSE);
 
-        this.stopButton = addBoomboxButton(86, 44, 1, n -> insStop());
+        this.stopButton = addBoomboxButton(97, 44, 1, n -> insStop());
 
-        this.playButton = addBoomboxButton(108, 44, 2, n -> {
+        this.playButton = addBoomboxButton(119, 44, 2, n -> {
             if (!getStackMusicURL().isEmpty())
                 insMode(BoomboxMode.PLAY);
         }, () -> getMode() == BoomboxMode.PLAY);
@@ -91,16 +91,23 @@ public class BoomboxScreen extends Screen {
     }
 
     private void insStop() {
-        insMode(BoomboxMode.NONE);
+        insMode(BoomboxMode.NONE, true);
     }
 
     protected void insMode(BoomboxMode mode) {
+        insMode(mode, false);
+    }
+
+    protected void insMode(BoomboxMode mode, boolean stop) {
         CompoundNBT tag = new CompoundNBT();
         tag.putBoolean("hand", hand == Hand.MAIN_HAND);
         ResponseSender.sendToServer(KMPWorldData.BOOMBOX_INS, 0, mode.getName(), tag);
 
         if (mode == BoomboxMode.PLAY)
             ResponseSender.sendToServer(KMPWorldData.BOOMBOX_INS, 2, "", tag);
+
+        if (stop)
+            ResponseSender.sendToServer(KMPWorldData.BOOMBOX_INS, 3, "", tag);
     }
 
     protected void insMusicURL(String url, long duration) {
@@ -155,17 +162,13 @@ public class BoomboxScreen extends Screen {
 
 
         if (musicLoading) {
-            drawGreenCenterString("loading", 108, 20);
+            drawGreenCenterString("urlcheack", 108, 25);
         } else if (!musicResult) {
-            drawGreenCenterString("notavailable", 108, 20);
+            drawGreenCenterString("notavailable", 108, 25);
         } else if (!musicResult && musicURLTextField.getText().isEmpty()) {
-            drawGreenCenterString("empty", 108, 20);
+            drawGreenCenterString("urlempty", 108, 25);
         } else if (musicResult) {
-            if (getMode() == BoomboxMode.PLAY) {
-                drawNlGreenCenterString(StringUtils.getTimeNotationPercentage(getCurrentMusicPlayPosition(), getMusicDuration()), 108, 20);
-            } else {
-                drawGreenCenterString("available", 108, 20);
-            }
+            drawNlGreenCenterString(StringUtils.getTimeNotationPercentage(getCurrentMusicPlayPosition(), getMusicDuration()), 108, 25);
         }
         super.render(mouseX, mouseY, parTick);
     }

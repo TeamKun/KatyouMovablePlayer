@@ -49,7 +49,7 @@ public class PlayerRinger implements IWorldRingWhether {
     public boolean canMusicPlay() {
         if (!ServerUtil.isOnlinePlayer(PlayerUtil.getUUID(playerEntity)))
             return false;
-        if (!playerEntity.isLiving())
+        if (playerEntity.getHealth() <= 0)
             return false;
         if (playerEntity.inventory.mainInventory.stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
             return false;
@@ -84,7 +84,7 @@ public class PlayerRinger implements IWorldRingWhether {
 
     @Override
     public boolean isMusicLoop() {
-        return false;
+        return true;
     }
 
     @Override

@@ -2,9 +2,9 @@
   "_comment.i": "item",
   "item.katyoumovableplayer.boombox": "Boombox",
   "_comment.g": "gui",
-  "boombox.loading": "Loading",
+  "boombox.urlcheack": "Checking URL",
   "boombox.notavailable": "Not Available",
   "boombox.available": "Available",
-  "boombox.empty": "Empty",
+  "boombox.urlempty": "Empty URL",
   "_comment.l": "last"
 }
