@@ -6,5 +6,8 @@
   "boombox.notavailable": "利用不可",
   "boombox.available": "利用可",
   "boombox.urlempty": "URLが空です",
+  "boombox.plaseurl": "ここにURLを入力",
+  "soundCategory.musicPlayer": "音楽プレイヤー",
+  "options.bigsugi": "大きスギィ！",
   "_comment.l": "last"
 }

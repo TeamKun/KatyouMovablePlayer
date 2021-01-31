@@ -1,5 +1,6 @@
 package net.kunmc.lab.kmp.client.music;
 
+import net.kunmc.lab.kmp.client.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.SoundCategory;
 
@@ -9,7 +10,6 @@ public class ClientWorldMusicManager {
     private static final Minecraft mc = Minecraft.getInstance();
     private static ClientWorldMusicManager INSTANCE;
     private double musicVolume;
-    private boolean stereoEnabled;
 
     private Map<UUID, MusicRinger> mplayers = new HashMap<>();
 
@@ -17,8 +17,7 @@ public class ClientWorldMusicManager {
 
     public static void init() {
         INSTANCE = new ClientWorldMusicManager();
-     //   INSTANCE.setMusicVolume(ClientConfig.MusicVolume.get());
-     //   INSTANCE.setStereoEnabled(ClientConfig.StereoEnabled.get());
+        INSTANCE.setMusicVolume(ClientConfig.MusicVolume.get());
     }
 
     public static ClientWorldMusicManager instance() {
@@ -79,18 +78,11 @@ public class ClientWorldMusicManager {
     }
 
     public double getEventuallyMusicVolume() {
-        return 1f * Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.MASTER);
+        return getMusicVolume() * Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.MASTER);
     }
 
     public void setMusicVolume(double musicVolume) {
         this.musicVolume = musicVolume;
     }
 
-    public boolean isStereoEnabled() {
-        return stereoEnabled;
-    }
-
-    public void setStereoEnabled(boolean stereoEnabled) {
-        this.stereoEnabled = stereoEnabled;
-    }
 }

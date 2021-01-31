@@ -1,5 +1,7 @@
 package net.kunmc.lab.kmp;
 
+import net.kunmc.lab.kmp.client.config.ClientConfig;
+import net.kunmc.lab.kmp.client.handler.ClientHandler;
 import net.kunmc.lab.kmp.client.handler.MusicRingerHandler;
 import net.kunmc.lab.kmp.client.handler.RenderHandler;
 import net.kunmc.lab.kmp.client.music.ClientWorldMusicManager;
@@ -29,6 +31,7 @@ public class KatyouMovablePlayer {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        ClientConfig.init();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -43,6 +46,7 @@ public class KatyouMovablePlayer {
         ClientWorldMusicManager.init();
         MinecraftForge.EVENT_BUS.register(MusicRingerHandler.class);
         MinecraftForge.EVENT_BUS.register(RenderHandler.class);
+        MinecraftForge.EVENT_BUS.register(ClientHandler.class);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

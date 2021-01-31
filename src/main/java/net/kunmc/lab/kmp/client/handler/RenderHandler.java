@@ -217,7 +217,7 @@ public class RenderHandler {
 
     private static void transformSideFirstPerson(MatrixStack matrixStackIn, HandSide handIn, float equippedProg) {
         int i = handIn == HandSide.RIGHT ? 1 : -1;
-        matrixStackIn.translate((double) ((float) i * 0.56F), (double) (-0.52F + (equippedProg >= 1f ? 0 : equippedProg) * -0.6F), (double) -0.72F);
+        matrixStackIn.translate((double) ((float) i * 0.56F), (double) (-0.52F + /*(equippedProg >= 1f ? 0 : equippedProg)*/0f * -0.6F), (double) -0.72F);
     }
 
     private static void renderArm(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, HandSide side) {

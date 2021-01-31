@@ -71,7 +71,7 @@ public class BoomboxScreen extends Screen {
         String MusicURLTextField = getStackMusicURL();
 
         if (MusicURLTextField.isEmpty())
-            MusicURLTextField = "Plase Music URL";
+            MusicURLTextField = "";
 
         if (this.musicURLTextField != null)
             MusicURLTextField = this.musicURLTextField.getText();
@@ -164,13 +164,18 @@ public class BoomboxScreen extends Screen {
 
         if (musicLoading) {
             drawGreenCenterString("urlcheack", 108, 25);
-        } else if (!musicResult) {
-            drawGreenCenterString("notavailable", 108, 25);
         } else if (!musicResult && musicURLTextField.getText().isEmpty()) {
             drawGreenCenterString("urlempty", 108, 25);
-        } else if (musicResult) {
+        } else if (!musicResult) {
+            drawGreenCenterString("notavailable", 108, 25);
+        } else {
             drawNlGreenCenterString(StringUtils.getTimeNotationPercentage(getCurrentMusicPlayPosition(), getMusicDuration()), 108, 25);
         }
+
+        if (musicURLTextField.getText().isEmpty()) {
+            RenderUtil.drawString(font, I18n.format("boombox.plaseurl"), btsx + 40, btsy + 70, 11119017);
+        }
+
         super.render(mouseX, mouseY, parTick);
     }
 

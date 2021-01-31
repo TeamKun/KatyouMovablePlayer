@@ -6,5 +6,8 @@
   "boombox.notavailable": "Not Available",
   "boombox.available": "Available",
   "boombox.urlempty": "Empty URL",
+  "boombox.plaseurl": "Enter the URL",
+  "soundCategory.musicPlayer": "Music Player",
+  "options.bigsugi": "Big Sugi!",
   "_comment.l": "last"
 }
