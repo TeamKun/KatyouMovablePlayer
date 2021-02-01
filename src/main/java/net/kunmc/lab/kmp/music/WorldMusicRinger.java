@@ -16,6 +16,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class WorldMusicRinger {
@@ -86,7 +87,8 @@ public class WorldMusicRinger {
     }
 
     public void playerPause(UUID plyaerUUID) {
-        ResponseSender.sendToClient(plyaerUUID.toString(), ServerUtil.getMinecraftServer(), KMPWorldData.WORLD_RINGD, 1, uuid.toString(), new CompoundNBT());
+        if (ServerUtil.isOnlinePlayer(plyaerUUID.toString()))
+            ResponseSender.sendToClient(plyaerUUID.toString(), ServerUtil.getMinecraftServer(), KMPWorldData.WORLD_RINGD, 1, uuid.toString(), new CompoundNBT());
         playingPlayers.remove(plyaerUUID);
         loadingPlayers.remove(plyaerUUID);
         loadWaitingPlayers.remove(plyaerUUID);
@@ -94,13 +96,14 @@ public class WorldMusicRinger {
         regularConfirmationPlayers.remove(plyaerUUID);
     }
 
-    public boolean isRelatedPlayer(UUID playerUUID) {
-        boolean flag1 = playingPlayers.contains(playerUUID);
-        boolean flag2 = loadingPlayers.contains(playerUUID);
-        boolean flag3 = loadWaitingPlayers.contains(playerUUID);
-        boolean flag4 = waitingMiddlePlayers.contains(playerUUID);
-        boolean flag5 = regularConfirmationPlayers.contains(playerUUID);
-        return flag1 || flag2 || flag3 || flag4 || flag5;
+    public List<UUID> getRelatedPlayers() {
+        List<UUID> list = new ArrayList<>();
+        list.addAll(playingPlayers);
+        list.addAll(loadingPlayers);
+        list.addAll(loadWaitingPlayers);
+        list.addAll(waitingMiddlePlayers);
+        list.addAll(regularConfirmationPlayers);
+        return list;
     }
 
     public boolean tick() {
@@ -120,16 +123,16 @@ public class WorldMusicRinger {
         Stream<ServerPlayerEntity> listenPlayers = ServerUtil.getOnlinePlayers().stream().filter(this::canListen);
 
         if (playWaiting && playWaitingPrev) {
-            listenPlayers.filter(n -> !(loadingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || loadWaitingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || playingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || waitingMiddlePlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))))).forEach(n -> {
+            listenPlayers.filter(n -> PlayerUtil.getUUID(n).equals(uuid.toString()) && !(loadingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || loadWaitingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || playingPlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))) || waitingMiddlePlayers.contains(UUID.fromString(PlayerUtil.getUUID(n))))).forEach(n -> {
                 loadingPlayers.add(UUID.fromString(PlayerUtil.getUUID(n)));
                 PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> n), new MusicRingMessage(uuid, getMusicPos(), getPlayMusicURL(), getCurrentMusicPlayPosition()));
             });
             playWaitingPrev = false;
-        } else if (playWaiting && loadingPlayers.isEmpty()) {
+        } else if (playWaiting && !loadingPlayers.contains(uuid)) {
             loadWaitingPlayers.stream().filter(n -> canListen(PlayerUtil.getPlayerByUUID(n.toString()))).forEach(n -> {
                 ResponseSender.sendToClient(n.toString(), ServerUtil.getMinecraftServer(), KMPWorldData.WORLD_RINGD, 0, uuid.toString(), new CompoundNBT());
             });
-            playingPlayers.addAll(loadWaitingPlayers);
+            playingPlayers.addAll(loadWaitingPlayers.stream().filter(n -> !loadingPlayers.contains(n)).collect(Collectors.toList()));
             playWaiting = false;
             ringin = true;
             ringStartTime = System.currentTimeMillis();
@@ -137,7 +140,7 @@ public class WorldMusicRinger {
 
         if (ringin) {
             long cur = ringStartElapsedTime + System.currentTimeMillis() - ringStartTime;
-            if (cur >= whether.getMusicDuration()) {//長さ！
+            if (cur >= whether.getMusicDuration()) {
                 if (whether.isMusicLoop()) {
                     pause();
                     whether.setCurrentMusicPlayPosition(0);
@@ -160,7 +163,7 @@ public class WorldMusicRinger {
                 }
             });
 
-            ServerUtil.getOnlinePlayers().stream().filter(n -> isRelatedPlayer(UUID.fromString(PlayerUtil.getUUID(n)))).filter(n -> !canListen(n)).forEach(n -> playerPause(UUID.fromString(PlayerUtil.getUUID(n))));
+            getRelatedPlayers().stream().filter(n -> !ServerUtil.isOnlinePlayer(n.toString()) || !canListen(n)).forEach(this::playerPause);
 
         }
 
@@ -192,6 +195,14 @@ public class WorldMusicRinger {
     public float getListenRange() {
 
         return 30f * getMusicVolume();
+    }
+
+    private boolean canListen(UUID uuid) {
+
+        if (!ServerUtil.isOnlinePlayer(uuid.toString()))
+            return false;
+
+        return canListen(PlayerUtil.getPlayerByUUID(uuid.toString()));
     }
 
     private boolean canListen(ServerPlayerEntity player) {

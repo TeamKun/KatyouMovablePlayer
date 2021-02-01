@@ -37,7 +37,7 @@ public class PlayerRinger implements IWorldRingWhether {
         return "";
     }
 
-    private final NonNullList<ItemStack> getPlayerItems() {
+    private NonNullList<ItemStack> getPlayerItems() {
         PlayerInventory inventory = playerEntity.inventory;
         NonNullList<ItemStack> il = NonNullList.create();
         il.addAll(inventory.mainInventory);
@@ -63,7 +63,7 @@ public class PlayerRinger implements IWorldRingWhether {
             return false;
         if (playerEntity.getHealth() <= 0)
             return false;
-        if ( getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
+        if (getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1)
             return false;
         CompoundNBT tag = getMusicPlayer().getTag();
         return tag != null && tag.getString("Mode").equalsIgnoreCase(BoomboxMode.PLAY.getName());

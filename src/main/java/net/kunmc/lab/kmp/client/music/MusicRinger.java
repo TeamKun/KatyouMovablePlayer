@@ -88,7 +88,7 @@ public class MusicRinger {
         public void run() {
             if (!readyPlay) {
                 try {
-                    musicPlayer = new URLMp3MusicPlayer(new URL(musicURL));
+                    musicPlayer = new URLMp3MusicPlayer(System.currentTimeMillis(), new URL(musicURL));
                     musicPlayer.ready(startPos);
                 } catch (Exception ex) {
                     ex.printStackTrace();

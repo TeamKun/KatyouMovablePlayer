@@ -3,11 +3,12 @@
   "item.katyoumovableplayer.boombox": "Boombox",
   "_comment.g": "gui",
   "boombox.urlcheack": "Checking URL",
-  "boombox.notavailable": "Not Available",
-  "boombox.available": "Available",
+  "boombox.notavailable": "Invalid URL",
+  "boombox.available": "Can Play this URL",
   "boombox.urlempty": "Empty URL",
   "boombox.plaseurl": "Enter the URL",
   "soundCategory.musicPlayer": "Music Player",
+  "message.boombox.notonly": "Only one boombox can be in your inventory",
   "options.bigsugi": "Big Sugi!",
   "_comment.l": "last"
 }

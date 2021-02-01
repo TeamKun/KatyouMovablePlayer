@@ -3,11 +3,12 @@
   "item.katyoumovableplayer.boombox": "ラジカセ",
   "_comment.g": "gui",
   "boombox.urlcheack": "URLを確認中",
-  "boombox.notavailable": "利用不可",
-  "boombox.available": "利用可",
+  "boombox.notavailable": "無効なURL",
+  "boombox.available": "再生可能なURL",
   "boombox.urlempty": "URLが空です",
   "boombox.plaseurl": "ここにURLを入力",
   "soundCategory.musicPlayer": "音楽プレイヤー",
+  "message.boombox.notonly": "インベントリ内に存在できるラジカセの数は一台までです。",
   "options.bigsugi": "大きスギィ！",
   "_comment.l": "last"
 }
