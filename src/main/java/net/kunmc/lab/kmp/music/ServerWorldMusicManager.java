@@ -60,4 +60,9 @@ public class ServerWorldMusicManager {
         if (ringdMusics.containsKey(uuid))
             ringdMusics.get(uuid).musicLoadingFinish(UUID.fromString(PlayerUtil.getUUID(player)));
     }
+
+    public static float getMusicRange() {
+        return 10;
+    }
+
 }

@@ -3,7 +3,7 @@ package net.kunmc.lab.kmp.client.music;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MusicThread extends Thread{
+public class MusicThread extends Thread {
     private static final Logger LOGGER = LogManager.getLogger(MusicThread.class);
     private static MusicThread thread;
     private boolean stoped;
@@ -25,7 +25,7 @@ public class MusicThread extends Thread{
         LOGGER.info("Music thread Start");
         while (!stoped) {
             try {
-                sleep(20);
+                sleep(1);
                 loop();
             } catch (Exception ex) {
                 LOGGER.error("Music thread Error", ex);

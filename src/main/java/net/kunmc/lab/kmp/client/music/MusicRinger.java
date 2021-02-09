@@ -5,11 +5,12 @@ import net.kunmc.lab.kmp.client.music.player.URLMp3MusicPlayer;
 import net.kunmc.lab.kmp.data.KMPWorldData;
 import net.kunmc.lab.kmp.data.ResponseSender;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.UUID;
 
 public class MusicRinger {
@@ -31,7 +32,17 @@ public class MusicRinger {
     }
 
     public double getDistance() {
-        return Math.sqrt(Objects.requireNonNull(Minecraft.getInstance().player).getDistanceSq(getPosition()));
+
+        ClientPlayerEntity cpe = Minecraft.getInstance().player;
+        double partic = Minecraft.getInstance().getRenderPartialTicks();
+        Vec3d pv = new Vec3d(MathHelper.lerp(partic, cpe.prevPosX, cpe.getPosX()), MathHelper.lerp(partic, cpe.prevPosY, cpe.getPosY()), MathHelper.lerp(partic, cpe.prevPosZ, cpe.getPosZ()));
+
+        double d0 = pv.getX() - getPosition().x;
+        double d1 = pv.getY() - getPosition().y;
+        double d2 = pv.getZ() - getPosition().z;
+        double md = d0 * d0 + d1 * d1 + d2 * d2;
+
+        return Math.sqrt(md);
     }
 
     public void playWait(long startpos) {
@@ -67,8 +78,16 @@ public class MusicRinger {
 
     public void volumeUpdate() {
         if (musicPlayer != null) {
-            float vol = 1f - (float) getDistance() / (30f * volume);
-            musicPlayer.setVolume((float) (Math.max(vol, 0f) * ClientWorldMusicManager.instance().getEventuallyMusicVolume()));
+            float vl = volume;
+            float rarnge = 30f * volume;
+            float distance = (float) getDistance();
+            float zure = (float) rarnge / 5f;
+            float atzure = (float) rarnge / 10f;
+            float nn = Math.min((vl / (distance - zure)) * 3f, 1f);
+            float at = Math.min((vl / (rarnge - zure)) * 3f, 1f);
+            float volume = distance <= zure ? 1f : distance <= (rarnge - atzure) ? nn : at * ((distance - rarnge) * -1 / atzure);
+
+            musicPlayer.setVolume((float) (volume * ClientWorldMusicManager.instance().getEventuallyMusicVolume()));
         }
     }
 

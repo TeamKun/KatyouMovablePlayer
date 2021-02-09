@@ -145,6 +145,7 @@ public class URLMp3MusicPlayer implements IMusicPlayer {
         public void run() {
             try {
                 startPlayTime = System.currentTimeMillis();
+                player.setVolume(0f);
                 player.play(startFrame, Integer.MAX_VALUE);
                 player = null;
             } catch (JavaLayerException e) {

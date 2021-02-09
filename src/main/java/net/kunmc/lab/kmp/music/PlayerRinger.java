@@ -52,8 +52,10 @@ public class PlayerRinger implements IWorldRingWhether {
 
     @Override
     public void musicStoped() {
-        CompoundNBT tag = getMusicPlayer().getOrCreateTag();
-        tag.putString("Mode", BoomboxMode.NONE.getName());
+        getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).forEach(n -> {
+            CompoundNBT tag = n.getOrCreateTag();
+            tag.putString("Mode", BoomboxMode.NONE.getName());
+        });
     }
 
 
@@ -92,7 +94,7 @@ public class PlayerRinger implements IWorldRingWhether {
 
     @Override
     public float getMusicVolume() {
-        return 1;
+        return ServerWorldMusicManager.getMusicRange() / 30f;
     }
 
     @Override

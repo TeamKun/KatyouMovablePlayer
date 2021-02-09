@@ -108,12 +108,10 @@ public class WorldMusicRinger {
 
     public boolean tick() {
 
-        if (playMusicURL == null) {
+        if (!whether.canMusicPlay() || playMusicURL == null) {
             stop();
-        }
-
-        if (!whether.canMusicPlay() || playMusicURL == null)
             return true;
+        }
 
         if (playWaiting)
             waitTime += System.currentTimeMillis() - lastUpdateTime;
@@ -206,7 +204,7 @@ public class WorldMusicRinger {
     }
 
     private boolean canListen(ServerPlayerEntity player) {
-        return player.world.getDimension().getType().getRegistryName().equals(getDimension()) && Math.sqrt(player.getDistanceSq(getMusicPos())) <= getListenRange() + 10;
+        return player.world.getDimension().getType().getRegistryName().equals(getDimension()) && Math.sqrt(player.getDistanceSq(getMusicPos())) <= getListenRange() + 30;
     }
 
     public void musicLoadingFinish(UUID playerUUID) {

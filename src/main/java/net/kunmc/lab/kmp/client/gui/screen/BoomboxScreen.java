@@ -4,6 +4,7 @@ import net.kunmc.lab.kmp.KatyouMovablePlayer;
 import net.kunmc.lab.kmp.client.util.RenderUtil;
 import net.kunmc.lab.kmp.data.KMPWorldData;
 import net.kunmc.lab.kmp.data.ResponseSender;
+import net.kunmc.lab.kmp.item.KMPItems;
 import net.kunmc.lab.kmp.music.BoomboxMode;
 import net.kunmc.lab.kmp.proxy.CommonProxy;
 import net.kunmc.lab.kmp.util.MusicUtils;
@@ -13,10 +14,13 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -61,7 +65,7 @@ public class BoomboxScreen extends Screen {
         this.stopButton = addBoomboxButton(97, 44, 1, n -> insStop());
 
         this.playButton = addBoomboxButton(119, 44, 2, n -> {
-            if (!getStackMusicURL().isEmpty())
+            if (!getStackMusicURL().isEmpty() && musicResult)
                 insMode(BoomboxMode.PLAY);
         }, () -> getMode() == BoomboxMode.PLAY);
 
@@ -271,5 +275,32 @@ public class BoomboxScreen extends Screen {
                 insMusicURL(source, duration);
             }
         }
+    }
+
+    private NonNullList<ItemStack> getPlayerItems() {
+        PlayerInventory inventory = getMinecraft().player.inventory;
+        NonNullList<ItemStack> il = NonNullList.create();
+        il.addAll(inventory.mainInventory);
+        il.addAll(inventory.armorInventory);
+        il.addAll(inventory.offHandInventory);
+        return il;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (getPlayerItems().stream().filter(n -> n.getItem() == KMPItems.BOOMBOX).count() != 1) {
+            onClose();
+        }
+    }
+
+    @Override
+    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+        InputMappings.Input mouseKey = InputMappings.getInputByCode(p_keyPressed_1_, p_keyPressed_2_);
+        if (!musicURLTextField.canWrite() && (p_keyPressed_1_ == 256 || this.minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))) {
+            onClose();
+            return true;
+        }
+        return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
     }
 }

@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.1'
+version = '1.2'
 group = 'net.kunmc.lab.kmp'
 archivesBaseName = 'KatyouMovablePlayer'
 
@@ -76,7 +76,7 @@ configurations {
 }
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
-    shadow files("libs/jl1.0.1-imp1.1.jar");
+    shadow files("libs/jl1.0.1-imp1.2.jar");
 }
 
 shadowJar {
