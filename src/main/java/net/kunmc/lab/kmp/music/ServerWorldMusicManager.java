@@ -1,6 +1,8 @@
 package net.kunmc.lab.kmp.music;
 
+import net.kunmc.lab.kmp.KMPGamerules;
 import net.kunmc.lab.kmp.util.PlayerUtil;
+import net.kunmc.lab.kmp.util.ServerUtil;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
@@ -62,7 +64,7 @@ public class ServerWorldMusicManager {
     }
 
     public static float getMusicRange() {
-        return 10;
+        return ServerUtil.getMinecraftServer().getGameRules().getInt(KMPGamerules.MUSICPLAYER_RANGE);
     }
 
 }

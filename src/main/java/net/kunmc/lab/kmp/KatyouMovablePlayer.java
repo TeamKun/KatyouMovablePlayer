@@ -35,6 +35,7 @@ public class KatyouMovablePlayer {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+        KMPGamerules.register();
         PacketHandler.init();
         ServerWorldMusicManager.init();
         MinecraftForge.EVENT_BUS.register(ServerHandler.class);
