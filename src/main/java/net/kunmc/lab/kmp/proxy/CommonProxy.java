@@ -1,6 +1,5 @@
 package net.kunmc.lab.kmp.proxy;
 
-import net.kunmc.lab.kmp.KMPGamerules;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;

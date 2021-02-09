@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -179,7 +180,7 @@ public class BoomboxScreen extends Screen {
         if (musicURLTextField.getText().isEmpty()) {
             RenderUtil.drawString(font, I18n.format("boombox.plaseurl"), btsx + 40, btsy + 70, 11119017);
         }
-
+        this.font.drawString(new TranslationTextComponent(KMPItems.BOOMBOX.getTranslationKey()).getFormattedText(), btsx + 42f + 8.0F, btsy + 6.0F, 4210752);
         super.render(mouseX, mouseY, parTick);
     }
 

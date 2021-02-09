@@ -2,6 +2,7 @@ package net.kunmc.lab.kmp.item;
 
 import net.kunmc.lab.kmp.KatyouMovablePlayer;
 import net.kunmc.lab.kmp.music.BoomboxMode;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -12,8 +13,16 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class BoomBoxItem extends Item {
     public BoomBoxItem(Item.Properties properties) {
@@ -48,5 +57,14 @@ public class BoomBoxItem extends Item {
         il.addAll(inventory.armorInventory);
         il.addAll(inventory.offHandInventory);
         return il;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        CompoundNBT tag = stack.getTag();
+        if (tag == null)
+            return;
+
+        tooltip.add(new TranslationTextComponent("boombox.desc.url", new StringTextComponent(tag.getString("MusicURL")).applyTextStyle(TextFormatting.GREEN)).applyTextStyle(TextFormatting.GRAY));
     }
 }

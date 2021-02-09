@@ -10,5 +10,8 @@
   "soundCategory.musicPlayer": "Music Player",
   "message.boombox.notonly": "Only one boombox can be in your inventory",
   "options.bigsugi": "Big Sugi!",
+  "commands.kmp.setrange": "Music player range is now set to: %s",
+  "commands.kmp.showrange": "Music player range is currently set to: %s",
+  "boombox.desc.url": "Specified URL: %s",
   "_comment.l": "last"
 }

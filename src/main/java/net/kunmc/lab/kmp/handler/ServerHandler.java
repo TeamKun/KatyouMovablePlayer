@@ -1,5 +1,6 @@
 package net.kunmc.lab.kmp.handler;
 
+import net.kunmc.lab.kmp.command.KMPCommands;
 import net.kunmc.lab.kmp.data.KMPWorldData;
 import net.kunmc.lab.kmp.event.common.ResponseEvent;
 import net.kunmc.lab.kmp.item.KMPItems;
@@ -10,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 public class ServerHandler {
     @SubscribeEvent
@@ -40,5 +42,10 @@ public class ServerHandler {
                 tag.putLong("CurrentPosition", 0);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerStart(FMLServerStartingEvent e) {
+        KMPCommands.registerCommand(e.getCommandDispatcher());
     }
 }

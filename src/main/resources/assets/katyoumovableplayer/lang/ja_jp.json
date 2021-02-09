@@ -10,5 +10,8 @@
   "soundCategory.musicPlayer": "音楽プレイヤー",
   "message.boombox.notonly": "インベントリ内に存在できるラジカセの数は一台までです。",
   "options.bigsugi": "大きスギィ！",
+  "commands.kmp.setrange": "音楽プレイヤーの聞こえる範囲が %s に設定されました",
+  "commands.kmp.showrange": "音楽プレイヤーの聞こえる範囲は %s に設定されています",
+  "boombox.desc.url": "指定URL: %s",
   "_comment.l": "last"
 }
